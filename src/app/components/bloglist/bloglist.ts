@@ -16,6 +16,7 @@ export class Bloglist {
 	posts = signal<Post[]>([]);
 
 	ngOnInit() {
+		console.log("USFADASDAS")
 		this.http.get<Post[]>('/api/posts').subscribe((posts) => {
 			this.posts.set(posts);
 		});
