@@ -1,11 +1,9 @@
 import { Pool } from 'pg';
 
+// Use the DATABASE_URL from Railway, or fall back to your local config
 const pool = new Pool({
-  user: 'jacobpilegaard',  // Your actual username
-  host: 'localhost',
-  database: 'blog',
-  password: '',  // Usually empty for local user
-  port: 5432,
+  connectionString: process.env["DATABASE_URL"] || 'postgresql://jacobpilegaard@localhost:5432/blog',
+  // Note: 'postgresql://user:password@host:port/database'
 });
 
 export async function getPosts() {

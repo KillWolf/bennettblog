@@ -16,6 +16,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+			"prerender": false,
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
@@ -35,6 +36,7 @@
           },
           "configurations": {
             "production": {
+			"prerender": false,
               "budgets": [
                 {
                   "type": "initial",
