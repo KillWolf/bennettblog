@@ -15,6 +15,7 @@ const app = express();
 const angularApp = new AngularNodeAppEngine();
 
 app.get('/api/posts', async (req, res) => {
+	console.log("WE ARE HERE YO")
 	const posts = await getPosts();
 	res.json(posts);
 });
