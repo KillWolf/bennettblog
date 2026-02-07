@@ -18,22 +18,21 @@ export class Bloglist {
 	posts = signal<Post[]>([]);
 
 	ngOnInit() {
-		const platform = isPlatformServer(this.platformId) ? 'SERVER' : 'BROWSER';
-		const requestUrl = '/api/posts';
+		const isServer = typeof window === 'undefined';
+		const url = isServer
+			? `http://localhost:${process.env['PORT'] || 8080}/api/posts`
+			: '/api/posts';
 
-		// 1. This log will show in RAILWAY DASHBOARD (Server) 
-		//    and in your INSPECTOR (Browser)
-		console.log(`[${platform}] Fetching from: ${requestUrl}`);
+		console.log(`[DEBUG] Platform: ${isServer ? 'SERVER' : 'BROWSER'} | URL: ${url}`);
 
-		this.http.get<Post[]>(requestUrl).subscribe({
+		this.http.get<Post[]>(url).subscribe({
 			next: (posts) => {
-				console.log(`[${platform}] Success! Received ${posts.length} posts.`);
+				console.log(`[DEBUG] Success: Found ${posts.length} posts`);
 				this.posts.set(posts);
 			},
 			error: (err) => {
-				// 2. THIS IS THE SMOKING GUN: Look for this in Railway Logs
-				console.error(`[${platform}] Error fetching posts:`, err.message);
+				console.error(`[DEBUG] Fetch Failed:`, err.message);
 			}
-		})
+		});
 	}
 }
