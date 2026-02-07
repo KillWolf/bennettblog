@@ -1,0 +1,5 @@
+<div class="flex gap-2 flex-col">
+	@for (post of posts(); track post.id) {
+	<app-blog [post]="post" />
+	}
+</div>

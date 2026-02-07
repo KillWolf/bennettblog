@@ -1,3 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "tailwindcss";
+
+/* Custom colors */
+
+:root {
+	--color-primary: #7D7F80;
+	--color-secondary: #D2D3D3;
+	--color-accent: #9615DB;
+	--color-background: #2D3032;
+	--color-text: #555759;
+}
+
+body {
+	background-color: var(--color-secondary);
+}
