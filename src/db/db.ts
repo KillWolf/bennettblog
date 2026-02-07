@@ -2,24 +2,21 @@ import { Pool } from 'pg';
 
 const connectionString = process.env['DATABASE_URL'];
 
-// BUILD GUARD: If we are building on Railway, the internal DB host is unreachable.
-// We check for 'CI' or 'RAILWAY_GIT_COMMIT_SHA' which Railway sets during builds.
-const isBuilding = !!process.env['RAILWAY_GIT_COMMIT_SHA'] || process.env['NODE_ENV'] === 'production' && !connectionString;
+// If we have a DATABASE_URL, we are likely in production. 
+// If we are in production but don't have a PORT yet, we are in the build phase.
+const isBuilding = process.env['NODE_ENV'] === 'production' && !process.env['PORT'];
 
 const pool = new Pool(
   connectionString && !isBuilding
     ? { connectionString }
     : {
-        // Fallback for local development
         user: 'jacobpilegaard',
         host: 'localhost',
         database: 'blog',
-        password: '',
-        port: 5432,
-        // CRITICAL: Set max connections to 0 during build to prevent ENOTFOUND
         max: isBuilding ? 0 : 10 
       }
 );
+
 
 export async function getPosts() {
 	console.log("FUCKING GETTING POSTS");
